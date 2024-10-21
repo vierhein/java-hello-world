@@ -1,0 +1,92 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- Project coordinates -->
+    <groupId>com.example.app</groupId>
+    <artifactId>my-web-app</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>war</packaging> <!-- This specifies that we're packaging a WAR file -->
+
+    <!-- Name and description of the project -->
+    <name>My Web App</name>
+    <description>A simple Maven web application deployed to Tomcat</description>
+
+    <!-- Properties for setting Java version -->
+    <properties>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <failOnMissingWebXml>false</failOnMissingWebXml> <!-- Use this if you don't want a web.xml file -->
+    </properties>
+
+    <!-- Dependencies -->
+    <dependencies>
+        <!-- Java Servlet API for web applications -->
+        <dependency>
+            <groupId>jakarta.servlet</groupId>
+            <artifactId>jakarta.servlet-api</artifactId>
+            <version>6.1.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.7.4</version>
+        </dependency>
+
+
+    </dependencies>
+
+    <!-- Build configuration -->
+    <build>
+        <!-- Specify the final name of the WAR file -->
+        <finalName>my-web-app</finalName>
+
+        <!-- Plugins used during the build process -->
+        <plugins>
+            <!-- Maven Compiler Plugin to compile Java code -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+
+            <!-- Maven WAR Plugin to package the project as a WAR file -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.3.2</version>
+                <configuration>
+                    <failOnMissingWebXml>false</failOnMissingWebXml> <!-- Optional if no web.xml -->
+                </configuration>
+            </plugin>
+
+            <!-- Tomcat Plugin for automatic deployment -->
+            <plugin>
+                <groupId>org.apache.tomcat.maven</groupId>
+                <artifactId>tomcat7-maven-plugin</artifactId>
+                <version>2.2</version>
+                <configuration>
+                    <url>http://localhost:8080/manager/text</url> <!-- URL of the Tomcat manager -->
+                    <server>TomcatServer</server> <!-- Corresponds to the server in settings.xml -->
+                    <path>/my-web-app</path> <!-- Path where the app will be deployed -->
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <!-- Deployment settings (Optional) -->
+    <distributionManagement>
+        <repository>
+            <id>TomcatServer</id>
+            <url>http://localhost:8080/manager/text</url>
+        </repository>
+    </distributionManagement>
+    
+</project>
